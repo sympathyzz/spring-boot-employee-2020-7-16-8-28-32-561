@@ -42,6 +42,10 @@ public class CompanyController {
     public Company getSpecifiedNameCompany(@PathVariable String companyName){
         return getCompanies().stream().filter(c ->c.getCompanyName().equals(companyName)).collect(Collectors.toList()).get(0);
     }
-
+    @GetMapping("/{companyName}/employees")
+    public List<Employee> getSpecifiedNameCompanyEmployees(@PathVariable String companyName){
+        Company specifiedNameCompany=getSpecifiedNameCompany(companyName);
+        return specifiedNameCompany.getEmployees();
+    }
 
 }
