@@ -50,4 +50,25 @@ public class EmployeeControl {
         return employees;
     }
 
+    @PutMapping("/{companyName}")
+    public void updateCompany(@PathVariable String employeeName,String newEmployeeName,Integer newEmployeesId,
+                              String newEmployeeGender,Integer newEmployeeSalary,Integer newEmployeeAge){
+        Employee specifiedEmployee= getSpecifiedNameEmployee(employeeName);
+        if(newEmployeeName!=null){
+            specifiedEmployee.setName(newEmployeeName);
+        }
+        if(newEmployeesId!=null){
+            specifiedEmployee.setId(newEmployeesId);
+        }
+        if(newEmployeeGender!=null){
+            specifiedEmployee.setGender(newEmployeeGender);
+        }
+        if(newEmployeeSalary!=null){
+            specifiedEmployee.setSalary(newEmployeeSalary);
+        }
+        if(newEmployeeAge!=null){
+            specifiedEmployee.setAge(newEmployeeAge);
+        }
+    }
+
 }
