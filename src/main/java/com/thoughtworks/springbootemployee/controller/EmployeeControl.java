@@ -2,10 +2,7 @@ package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +27,13 @@ public class EmployeeControl {
     }
 
     @GetMapping("")
-    public List<Employee> getEmployees(){
-        return getAllData();
+    public List<Employee> getEmployees(@RequestParam(defaultValue="null") String page, @RequestParam(defaultValue="null") String pageSize){
+        if(!page.equals("null")&&!pageSize.equals("null")){
+            return getAllData().stream().skip((Integer.parseInt(page)-1)*Integer.parseInt(pageSize)).limit(Integer.parseInt(pageSize)).collect(Collectors.toList());
+        }else{
+            return getAllData();
+        }
+
     }
     @GetMapping("/{name}")
     public Employee getSpecifiedNameEmployee(@PathVariable String name){
