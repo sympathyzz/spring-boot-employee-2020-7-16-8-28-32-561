@@ -27,7 +27,10 @@ public class EmployeeControl {
     }
 
     @GetMapping("")
-    public List<Employee> getEmployees(@RequestParam(defaultValue="null") String page, @RequestParam(defaultValue="null") String pageSize){
+    public List<Employee> getEmployees(@RequestParam(defaultValue="null") String page, @RequestParam(defaultValue="null") String pageSize,String gender){
+        if(gender!=null){
+            return getAllData().stream().filter(employee -> employee.getGender().equals(gender)).collect(Collectors.toList());
+        }
         if(!page.equals("null")&&!pageSize.equals("null")){
             return getAllData().stream().skip((Integer.parseInt(page)-1)*Integer.parseInt(pageSize)).limit(Integer.parseInt(pageSize)).collect(Collectors.toList());
         }else{
