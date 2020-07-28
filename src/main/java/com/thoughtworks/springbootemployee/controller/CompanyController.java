@@ -6,7 +6,9 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 @RestController
 @RequestMapping("/companies")
@@ -34,18 +36,46 @@ public class CompanyController {
         return companies;
     }
 
-    @GetMapping("")
-    public List<Company> getCompanies(){
-        return getAllData();
-    }
     @GetMapping("/{companyName}")
     public Company getSpecifiedNameCompany(@PathVariable String companyName){
-        return getCompanies().stream().filter(c ->c.getCompanyName().equals(companyName)).collect(Collectors.toList()).get(0);
+        return getAllData().stream().filter(c ->c.getCompanyName().equals(companyName)).collect(Collectors.toList()).get(0);
     }
     @GetMapping("/{companyName}/employees")
     public List<Employee> getSpecifiedNameCompanyEmployees(@PathVariable String companyName){
         Company specifiedNameCompany=getSpecifiedNameCompany(companyName);
         return specifiedNameCompany.getEmployees();
     }
+
+    @GetMapping("")
+    public List<Company> getCompanies(@RequestParam(defaultValue="null") String page,@RequestParam(defaultValue="null") String pageSize){
+        if(!page.equals("null")&&!pageSize.equals("null")){
+            List<Company> specifiedCompanies=null;
+            if(getAllData().size()>=Integer.parseInt(pageSize)+Integer.parseInt(page)-1){
+                for(int companyIndex=Integer.parseInt(page)-1;companyIndex<Integer.parseInt(pageSize)+Integer.parseInt(page);companyIndex++){
+                    specifiedCompanies.add(getAllData().get(companyIndex));
+                }
+            }
+            return specifiedCompanies;
+        }else{
+            return getAllData();
+        }
+
+    }
+
+    @PutMapping("/{companyName}")
+    public void updateCompany(@PathVariable String companyName,String newCompanyName,Integer newEmployeesNumber,List<Employee> employees){
+       Company specifiedCompany= getSpecifiedNameCompany(companyName);
+       if(newCompanyName!=null){
+           specifiedCompany.setCompanyName(newCompanyName);
+       }
+        if(newEmployeesNumber!=null){
+            specifiedCompany.setEmployeesNumber(newEmployeesNumber);
+        }
+        if(employees!=null){
+            specifiedCompany.setEmployees(employees);
+        }
+    }
+
+
 
 }
