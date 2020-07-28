@@ -49,13 +49,7 @@ public class CompanyController {
     @GetMapping("")
     public List<Company> getCompanies(@RequestParam(defaultValue="null") String page,@RequestParam(defaultValue="null") String pageSize){
         if(!page.equals("null")&&!pageSize.equals("null")){
-            List<Company> specifiedCompanies=null;
-            if(getAllData().size()>=Integer.parseInt(pageSize)+Integer.parseInt(page)-1){
-                for(int companyIndex=Integer.parseInt(page)-1;companyIndex<Integer.parseInt(pageSize)+Integer.parseInt(page);companyIndex++){
-                    specifiedCompanies.add(getAllData().get(companyIndex));
-                }
-            }
-            return specifiedCompanies;
+            return getAllData().stream().skip((Integer.parseInt(page)-1)*Integer.parseInt(pageSize)).limit(Integer.parseInt(pageSize)).collect(Collectors.toList());
         }else{
             return getAllData();
         }
