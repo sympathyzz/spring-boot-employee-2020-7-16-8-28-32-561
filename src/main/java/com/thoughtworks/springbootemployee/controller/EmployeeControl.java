@@ -42,4 +42,12 @@ public class EmployeeControl {
     public Employee getSpecifiedNameEmployee(@PathVariable String name){
         return getAllData().stream().filter(employee ->employee.getName().equals(name)).collect(Collectors.toList()).get(0);
     }
+
+    @PostMapping("")
+    public List<Employee> addEmployee(){
+        Employee baiduEmployee = new Employee(5, "baidu1", 20, "male", 10000);
+        employees.add(baiduEmployee);
+        return employees;
+    }
+
 }
