@@ -82,5 +82,10 @@ public class CompanyController {
         return companies;
     }
 
+    @DeleteMapping("/{companyName}")
+    public List<Company> deleteCompany(@PathVariable String companyName){
+        getAllData().stream().filter(company -> company.getCompanyName().equals(companyName)).collect(Collectors.toList()).get(0).setEmployees(null);
+        return getAllData();
+    }
 
 }
