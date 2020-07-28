@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/companies")
@@ -38,5 +38,10 @@ public class CompanyController {
     public List<Company> getCompanies(){
         return getAllData();
     }
+    @GetMapping("/{companyName}")
+    public Company getSpecifiedNameCompany(@PathVariable String companyName){
+        return getCompanies().stream().filter(c ->c.getCompanyName().equals(companyName)).collect(Collectors.toList()).get(0);
+    }
+
 
 }
