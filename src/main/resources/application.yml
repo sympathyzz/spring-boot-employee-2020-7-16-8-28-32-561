@@ -1,1 +1,6 @@
+spring:
+
+server:
+  #端口号
+  port: 8083
 
