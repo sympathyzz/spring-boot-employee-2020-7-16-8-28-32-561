@@ -71,4 +71,10 @@ public class EmployeeControl {
         }
     }
 
+    @DeleteMapping("/{employeeName}")
+    public List<Employee> deleteEmployee(@PathVariable String employeeName){
+        getAllData().remove(getAllData().stream().filter(employee -> employee.getName().equals(employeeName)).collect(Collectors.toList()).get(0));
+        return getAllData();
+    }
+
 }
