@@ -6,9 +6,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
-import java.util.stream.IntStream;
+
 
 @RestController
 @RequestMapping("/companies")
@@ -16,7 +15,7 @@ public class CompanyController {
 
     private static final String ALIBABA = "alibaba";
     public static final String OOCL = "oocl";
-
+    public static List<Company> companies=new ArrayList<>();
     public List<Company> getAllData(){
         Employee employee1=new Employee(1,"alibaba1",17,"male",6000);
         Employee employee2=new Employee(2,"alibaba2",18,"female",7000);
@@ -30,9 +29,10 @@ public class CompanyController {
         OOCLEmployees.add(employee4);
         Company company1=new Company(ALIBABA,2,ALIBABAEmployees);
         Company company2=new Company(OOCL,2,OOCLEmployees);
-        List companies=new ArrayList<Company>();
-        companies.add(company1);
-        companies.add(company2);
+        if(companies.size()==0){
+            companies.add(company1);
+            companies.add(company2);
+        }
         return companies;
     }
 
@@ -70,6 +70,17 @@ public class CompanyController {
         }
     }
 
+    @PostMapping("")
+    public List<Company> addCompany(){
+        List<Employee> baiduEmployees=new ArrayList<>();
+        Employee baiduEmployee1 = new Employee(5, "baidu1", 20, "male", 10000);
+        Employee baiduEmployee2 = new Employee(6, "baidu2", 20, "male", 11000);
+        baiduEmployees.add(baiduEmployee1);
+        baiduEmployees.add(baiduEmployee2);
+        Company company=new Company("baidu",2,baiduEmployees);
+        companies.add(company);
+        return companies;
+    }
 
 
 }
