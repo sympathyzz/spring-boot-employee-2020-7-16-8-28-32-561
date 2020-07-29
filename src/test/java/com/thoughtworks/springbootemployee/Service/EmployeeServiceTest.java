@@ -36,12 +36,15 @@ public class EmployeeServiceTest {
     void should_return_specifiedEmployee_when_find_employee_given_name(){
         //given
         EmployeeService employeeService = new EmployeeService();
-        String employeeName="zach";
+        String employeeName1="Zach";
+        String employeeName2="aaa";
         //when
-        Employee returnEmployee = employeeService.findByName(employeeName);
+        Employee returnEmployee1 = employeeService.findByName(employeeName1);
+        Employee returnEmployee2 = employeeService.findByName(employeeName2);
 
         //then
-        assertEquals(employeeName,returnEmployee.getName());
+        assertEquals(employeeName1,returnEmployee1.getName());
+        assertEquals(null,returnEmployee2);
     }
 
 }

@@ -24,6 +24,11 @@ public class EmployeeService {
     }
 
     public Employee findByName(String employeeName) {
-        return null;
+        EmployeeController employeeController = new EmployeeController();
+        List<Employee> employees = employeeController.getAllData();
+
+        return employees.stream().filter(employee -> {
+            return employeeName.equals(employee.getName());
+        }).findFirst().orElse(null);
     }
 }
