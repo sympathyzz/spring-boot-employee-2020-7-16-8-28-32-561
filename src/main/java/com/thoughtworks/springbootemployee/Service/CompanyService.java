@@ -32,4 +32,8 @@ public class CompanyService {
         List<Company> companies = companyRepository.findAll();
         return companies.stream().filter(company -> company.getCompanyName().equals(companyName)).findFirst().orElse(null);
     }
+
+    public List<Company> getAll() {
+        return null;
+    }
 }

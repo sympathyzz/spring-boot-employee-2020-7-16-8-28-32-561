@@ -80,4 +80,19 @@ public class CompanyServiceTest {
         assertEquals(null, returnCompany2);
     }
 
+    @Test
+    void should_return_all_companies_when_get_all_given_no_parameter() {
+        //given
+        CompanyRepository mockedCompanyRepository = Mockito.mock(CompanyRepository.class);
+        when(mockedCompanyRepository.findAll()).thenReturn(
+                generateCompanyList()
+        );
+        CompanyService companyService = new CompanyService(mockedCompanyRepository);
+        //when
+        List<Company> companies = companyService.getAll();
+        //then
+        assertEquals(2, companies.size());
+
+    }
+
 }
