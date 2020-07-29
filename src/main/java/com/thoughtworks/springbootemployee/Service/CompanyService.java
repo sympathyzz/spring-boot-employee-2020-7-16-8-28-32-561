@@ -34,6 +34,7 @@ public class CompanyService {
     }
 
     public List<Company> getAll() {
-        return null;
+        List<Company> companies = companyRepository.findAll();
+        return companies;
     }
 }
