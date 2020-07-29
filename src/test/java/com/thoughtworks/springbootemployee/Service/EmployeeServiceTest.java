@@ -32,4 +32,16 @@ public class EmployeeServiceTest {
         assertEquals(returnEmployee.getSalary(),newEmployee.getSalary());
     }
 
+    @Test
+    void should_return_specifiedEmployee_when_find_employee_given_name(){
+        //given
+        EmployeeService employeeService = new EmployeeService();
+        String employeeName="zach";
+        //when
+        Employee returnEmployee = employeeService.findByName(employeeName);
+
+        //then
+        assertEquals(employeeName,returnEmployee.getName());
+    }
+
 }

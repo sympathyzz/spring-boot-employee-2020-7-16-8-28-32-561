@@ -22,4 +22,8 @@ public class EmployeeService {
         }
         return null;
     }
+
+    public Employee findByName(String employeeName) {
+        return null;
+    }
 }
