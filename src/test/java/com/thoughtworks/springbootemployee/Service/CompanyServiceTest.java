@@ -13,6 +13,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 import static org.mockito.Mockito.when;
 
 public class CompanyServiceTest {
@@ -129,6 +130,28 @@ public class CompanyServiceTest {
         //then
         assertEquals("delete success!",message1);
         assertEquals("delete fail!",message2);
+    }
+
+    @Test
+    void should_return_new_company_when_add_given_new_company(){
+        //given
+        List<Employee> baiduEmployees=new ArrayList<>();
+        Employee baiduEmployee1 = new Employee(5, "baidu1", 20, "male", 10000);
+        Employee baiduEmployee2 = new Employee(6, "baidu2", 20, "male", 11000);
+        baiduEmployees.add(baiduEmployee1);
+        baiduEmployees.add(baiduEmployee2);
+        Company newCompany=new Company(3,"baidu",2,baiduEmployees);
+
+        CompanyRepository mockedCompanyRepository = Mockito.mock(CompanyRepository.class);
+        when(mockedCompanyRepository.findAll()).thenReturn(
+                generateCompanyList()
+        );
+        CompanyService companyService = new CompanyService(mockedCompanyRepository);
+        //when
+        Company returnedCompany=companyService.addCompany(newCompany);
+        //then
+        assertEquals(3,generateCompanyList().size());
+        assertNotNull(returnedCompany);
     }
 
 }
