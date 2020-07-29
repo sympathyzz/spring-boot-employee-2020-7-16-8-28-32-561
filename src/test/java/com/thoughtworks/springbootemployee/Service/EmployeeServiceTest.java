@@ -60,6 +60,22 @@ public class EmployeeServiceTest {
         assertEquals(null, returnEmployee2);
     }
 
+    @Test
+    void should_return_all_employee_when_get_all_given_no_parameter(){
+        //given
+        EmployeeRepository mockedEmployeeRepository = Mockito.mock(EmployeeRepository.class);
+        when(mockedEmployeeRepository.findAll()).thenReturn(
+                Arrays.asList(
+                        new Employee(1, "Gavin", 17, "male", 6000),
+                        new Employee(2, "Zach", 18, "female", 7000)
+                )
+        );
+        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
+        //when
+        List<Employee> employees = employeeService.getAll();
+        //then
+        assertEquals(2,employees.size());
 
+    }
 
 }

@@ -36,4 +36,8 @@ public class EmployeeService {
             return employeeName.equals(employee.getName());
         }).findFirst().orElse(null);
     }
+
+    public List<Employee> getAll() {
+        return null;
+    }
 }
