@@ -27,6 +27,7 @@ public class EmployeeController {
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<Employee> getEmployees(@RequestParam(defaultValue="0") Integer page, @RequestParam(defaultValue="0") Integer pageSize,@RequestParam(required = false)String gender){
         if(gender!=null){
             return getAllData().stream().filter(employee -> employee.getGender().equals(gender)).collect(Collectors.toList());
@@ -39,11 +40,13 @@ public class EmployeeController {
 
     }
     @GetMapping("/{name}")
+    @ResponseStatus(HttpStatus.OK)
     public Employee getSpecifiedNameEmployee(@PathVariable String name){
         return getAllData().stream().filter(employee ->employee.getName().equals(name)).collect(Collectors.toList()).get(0);
     }
 
     @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
     public Employee addEmployee(Employee employee){
         if(getAllData().add(employee)){
             return employee;
@@ -52,6 +55,7 @@ public class EmployeeController {
     }
 
     @PutMapping("/{employeeName}")
+    @ResponseStatus(HttpStatus.OK)
     public Employee updateEmployee(@PathVariable String employeeName,@RequestBody Employee employee){
         Employee specifiedEmployee= getSpecifiedNameEmployee(employeeName);
             if(employee!=null){
