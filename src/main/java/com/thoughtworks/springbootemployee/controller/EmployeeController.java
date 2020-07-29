@@ -25,7 +25,7 @@ public class EmployeeController {
         return employees;
     }
 
-    @GetMapping("")
+    @GetMapping
     public List<Employee> getEmployees(@RequestParam(defaultValue="null") String page, @RequestParam(defaultValue="null") String pageSize,String gender){
         if(gender!=null){
             return getAllData().stream().filter(employee -> employee.getGender().equals(gender)).collect(Collectors.toList());
@@ -42,11 +42,11 @@ public class EmployeeController {
         return getAllData().stream().filter(employee ->employee.getName().equals(name)).collect(Collectors.toList()).get(0);
     }
 
-    @PostMapping("")
+    @PostMapping
     public List<Employee> addEmployee(){
         Employee baiduEmployee = new Employee(5, "baidu1", 20, "male", 10000);
-        employees.add(baiduEmployee);
-        return employees;
+        getAllData().add(baiduEmployee);
+        return getAllData();
     }
 
     @PutMapping("/{employeeName}")
