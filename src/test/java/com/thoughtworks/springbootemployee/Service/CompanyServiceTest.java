@@ -38,7 +38,7 @@ public class CompanyServiceTest {
     }
 
     @Test
-    void should_return_employee_when_update_given_new_company() {
+    void should_return_company_when_update_given_new_company() {
         //given
         List<Employee> baiduEmployees=new ArrayList<>();
         Employee baiduEmployee1 = new Employee(5, "baidu1", 20, "male", 10000);
