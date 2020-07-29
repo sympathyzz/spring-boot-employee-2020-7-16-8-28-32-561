@@ -47,4 +47,8 @@ public class EmployeeService {
         List<Employee> employees = employeeRepository.findAll();
         return employees.stream().skip((page - 1) * pageSize).limit(pageSize).collect(Collectors.toList());
     }
+
+    public List<Employee> deleteEmployeeByName(String employeeName) {
+        return null;
+    }
 }
