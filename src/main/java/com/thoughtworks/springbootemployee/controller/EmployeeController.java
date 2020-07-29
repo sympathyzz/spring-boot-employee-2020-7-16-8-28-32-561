@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
-    public static List<Employee> employees=new ArrayList<>();
+    private static List<Employee> employees=new ArrayList<>();
     public List<Employee> getAllData(){
         Employee employee1=new Employee(1,"alibaba1",17,"male",6000);
         Employee employee2=new Employee(2,"alibaba2",18,"female",7000);

@@ -14,8 +14,8 @@ import java.util.stream.Collectors;
 public class CompanyController {
 
     private static final String ALIBABA = "alibaba";
-    public static final String OOCL = "oocl";
-    public static List<Company> companies=new ArrayList<>();
+    private static final String OOCL = "oocl";
+    private static List<Company> companies=new ArrayList<>();
     public List<Company> getAllData(){
         Employee employee1=new Employee(1,"alibaba1",17,"male",6000);
         Employee employee2=new Employee(2,"alibaba2",18,"female",7000);
