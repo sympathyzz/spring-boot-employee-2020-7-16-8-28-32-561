@@ -30,7 +30,7 @@ public class EmployeeService {
     }
 
     public Employee findByName(String employeeName) {
-        List<Employee> employees = (List<Employee>) employeeRepository.findAll();
+        List<Employee> employees = employeeRepository.findAll();
 
         return employees.stream().filter(employee -> {
             return employeeName.equals(employee.getName());
@@ -38,6 +38,7 @@ public class EmployeeService {
     }
 
     public List<Employee> getAll() {
-        return null;
+        List<Employee> employees = employeeRepository.findAll();
+        return employees;
     }
 }
