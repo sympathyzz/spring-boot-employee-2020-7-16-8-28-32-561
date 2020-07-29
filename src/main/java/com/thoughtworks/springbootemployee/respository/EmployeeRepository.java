@@ -1,15 +1,11 @@
 package com.thoughtworks.springbootemployee.respository;
 
 import com.thoughtworks.springbootemployee.model.Employee;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class EmployeeRepository {
-    public Employee findById(int i) {
-        return null;
-    }
-
-    public List<Employee> findAll() {
-        return null;
-    }
+@Repository
+public interface EmployeeRepository extends JpaRepository<Employee,Integer> {
 }

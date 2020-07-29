@@ -3,15 +3,14 @@ package com.thoughtworks.springbootemployee.Service;
 import com.thoughtworks.springbootemployee.controller.EmployeeController;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.respository.EmployeeRepository;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-
+@Service
 public class EmployeeService {
     private EmployeeRepository employeeRepository;
-    private static final String FAIL_MESSAGE = "fail";
-    private static final String SUCCESS_MESSAGE = "success";
 
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
