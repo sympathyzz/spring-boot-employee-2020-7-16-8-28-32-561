@@ -1,12 +1,13 @@
 package com.thoughtworks.springbootemployee.Service;
 
-import com.thoughtworks.springbootemployee.controller.EmployeeController;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.respository.EmployeeRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
 @Service
 public class EmployeeService {
@@ -16,25 +17,29 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public Employee update(Employee newEmployee) {
-        EmployeeController employeeController = new EmployeeController();
-        List<Employee> employees = employeeController.getAllData();
-
-        for (Employee employee : employees) {
-            if (employee.getId() == newEmployee.getId()) {
-                employee.setAge(newEmployee.getAge());
-                employee.setSalary(newEmployee.getSalary());
-                employee.setName(newEmployee.getName());
-                employee.setGender(newEmployee.getGender());
-                return employee;
+    public Employee update(Integer employeeId,Employee newEmployee) {
+        Optional<Employee> employee = employeeRepository.findById(employeeId);
+        if(employee!=null){
+            if (newEmployee.getName()!=null){
+                employee.get().setName(newEmployee.getName());
             }
+            if (newEmployee.getAge()!=null){
+                employee.get().setAge(newEmployee.getAge());
+            }
+            if (newEmployee.getGender()!=null){
+                employee.get().setGender(newEmployee.getGender());
+            }
+            employeeRepository.save(employee.get());
         }
-        return null;
+        return employee.get();
     }
 
     public Employee findByName(String employeeName) {
-        List<Employee> employees = employeeRepository.findAll();
-        return employees.stream().filter(employee -> employee.getName().equals(employeeName)).findFirst().orElse(null);
+         return employeeRepository.findByName(employeeName).get();
+    }
+
+    public Employee findById(Integer employeeId) {
+        return employeeRepository.findById(employeeId).get();
     }
 
     public List<Employee> getAll() {
@@ -42,32 +47,25 @@ public class EmployeeService {
         return employees;
     }
 
-    public List<Employee> getEmployeeByPage(int page, int pageSize) {
-        List<Employee> employees = employeeRepository.findAll();
-        return employees.stream().skip((page - 1) * pageSize).limit(pageSize).collect(Collectors.toList());
+    public Page<Employee> getEmployeeByPage(Integer page, Integer pageSize) {
+        return employeeRepository.findAll(PageRequest.of(page,pageSize));
     }
 
-    public String deleteEmployeeByName(String employeeName) {
-        List<Employee> employees = employeeRepository.findAll();
-        Employee specifiedEmployee=findByName(employeeName);
-        if (specifiedEmployee!=null) {
-            if(employees.remove(specifiedEmployee )){
-                return "delete success!";
-            }
-        }
-        return "delete fail!";
+    public void deleteEmployeeByName(String employeeName) {
+       Optional<Employee> employee=employeeRepository.findByName(employeeName);
+       employee.ifPresent(employeeRepository::delete);
+    }
+
+    public void deleteEmployeeById(Integer employeeId) {
+        Optional<Employee> employee=employeeRepository.findById(employeeId);
+        employee.ifPresent(employeeRepository::delete);
     }
 
     public Employee addEmployee(Employee newEmployee) {
-        List<Employee> employees = employeeRepository.findAll();
-        if(employees.add(newEmployee)){
-            return newEmployee;
-        }
-        return null;
+        return employeeRepository.add(newEmployee);
     }
 
     public List<Employee> getEmployeeByGender(String gender) {
-        List<Employee> employees = employeeRepository.findAll();
-        return employees.stream().filter(employee -> employee.getGender().equals(gender)).collect(Collectors.toList());
+        return employeeRepository.findByGender(gender);
     }
 }
