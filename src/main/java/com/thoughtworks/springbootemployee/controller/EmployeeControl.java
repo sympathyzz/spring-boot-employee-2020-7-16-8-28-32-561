@@ -50,25 +50,18 @@ public class EmployeeControl {
         return employees;
     }
 
-    @PutMapping("/{companyName}")
-    public void updateCompany(@PathVariable String employeeName,String newEmployeeName,Integer newEmployeesId,
-                              String newEmployeeGender,Integer newEmployeeSalary,Integer newEmployeeAge){
+    @PutMapping("/{employeeName}")
+    public Employee updateEmployee(@PathVariable String employeeName,@RequestBody Employee employee){
         Employee specifiedEmployee= getSpecifiedNameEmployee(employeeName);
-        if(newEmployeeName!=null){
-            specifiedEmployee.setName(newEmployeeName);
-        }
-        if(newEmployeesId!=null){
-            specifiedEmployee.setId(newEmployeesId);
-        }
-        if(newEmployeeGender!=null){
-            specifiedEmployee.setGender(newEmployeeGender);
-        }
-        if(newEmployeeSalary!=null){
-            specifiedEmployee.setSalary(newEmployeeSalary);
-        }
-        if(newEmployeeAge!=null){
-            specifiedEmployee.setAge(newEmployeeAge);
-        }
+            if(employee!=null){
+                specifiedEmployee.setName(employee.getName());
+                specifiedEmployee.setId(employee.getId());
+                specifiedEmployee.setGender(employee.getGender());
+                specifiedEmployee.setSalary(employee.getSalary());
+                specifiedEmployee.setAge(employee.getAge());
+                return specifiedEmployee;
+            }
+        return null;
     }
 
     @DeleteMapping("/{employeeName}")
