@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.model.Employee;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -65,9 +66,9 @@ public class EmployeeController {
     }
 
     @DeleteMapping("/{employeeName}")
-    public List<Employee> deleteEmployee(@PathVariable String employeeName){
-        getAllData().remove(getAllData().stream().filter(employee -> employee.getName().equals(employeeName)).collect(Collectors.toList()).get(0));
-        return getAllData();
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteEmployee(@PathVariable String employeeName){
+        getAllData().remove(getSpecifiedNameEmployee(employeeName));
     }
 
 }
