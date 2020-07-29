@@ -60,4 +60,24 @@ public class CompanyServiceTest {
         assertEquals(newCompany.getEmployeesNumber(), returnedCompany.getEmployeesNumber());
         assertEquals(newCompany.getEmployees(), returnedCompany.getEmployees());
     }
+
+    @Test
+    void should_return_specifiedCompany_when_find_given_company_name() {
+        //given
+        CompanyRepository mockedCompanyRepository = Mockito.mock(CompanyRepository.class);
+        when(mockedCompanyRepository.findAll()).thenReturn(
+                generateCompanyList()
+        );
+        CompanyService companyService = new CompanyService(mockedCompanyRepository);
+        String companyName1 = "oocl";
+        String companyName2 = "aaa";
+        //when
+        Company returnCompany1 = companyService.findByName(companyName1);
+        Company returnCompany2 = companyService.findByName(companyName2);
+
+        //then
+        assertEquals(companyName1, returnCompany1.getCompanyName());
+        assertEquals(null, returnCompany2);
+    }
+
 }

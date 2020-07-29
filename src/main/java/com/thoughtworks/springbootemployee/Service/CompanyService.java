@@ -27,4 +27,8 @@ public class CompanyService {
         }
         return null;
     }
+
+    public Company findByName(String companyName1) {
+        return null;
+    }
 }
