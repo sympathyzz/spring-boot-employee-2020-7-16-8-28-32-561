@@ -113,4 +113,22 @@ public class CompanyServiceTest {
         assertEquals(2, companies.size());
     }
 
+    @Test
+    void should_return_success_message_when_delete_company_given_company_name(){
+        //given
+        CompanyRepository mockedCompanyRepository = Mockito.mock(CompanyRepository.class);
+        when(mockedCompanyRepository.findAll()).thenReturn(
+                generateCompanyList()
+        );
+        CompanyService companyService = new CompanyService(mockedCompanyRepository);
+        String companyName1="alibaba";
+        String companyName2="aaa";
+        //when
+        String message1 = companyService.deleteCompanyByName(companyName1);
+        String message2 = companyService.deleteCompanyByName(companyName2);
+        //then
+        assertEquals("delete success!",message1);
+        assertEquals("delete fail!",message2);
+    }
+
 }

@@ -43,4 +43,8 @@ public class CompanyService {
         List<Company> companies = companyRepository.findAll();
         return companies.stream().skip((page - 1) * pageSize).limit(pageSize).collect(Collectors.toList());
     }
+
+    public String deleteCompanyById(Integer companyId1) {
+        return null;
+    }
 }
