@@ -41,4 +41,8 @@ public class EmployeeService {
         List<Employee> employees = employeeRepository.findAll();
         return employees;
     }
+
+    public List<Employee> getEmployeeByPage(int page, int pageSize) {
+        return null;
+    }
 }

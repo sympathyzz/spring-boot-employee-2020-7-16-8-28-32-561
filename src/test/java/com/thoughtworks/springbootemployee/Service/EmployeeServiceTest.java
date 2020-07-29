@@ -75,4 +75,25 @@ public class EmployeeServiceTest {
 
     }
 
+    @Test
+    void should_return_specified_page_employees_when_get_employees_by_page_given_page_and_page_size(){
+        //given
+        EmployeeRepository mockedEmployeeRepository = Mockito.mock(EmployeeRepository.class);
+        when(mockedEmployeeRepository.findAll()).thenReturn(
+                Arrays.asList(
+                        new Employee(1, "Gavin", 17, "male", 6000),
+                        new Employee(2, "Zach", 18, "female", 7000)
+                )
+        );
+        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
+        int page=1;
+        int pageSize=2;
+
+        //when
+        List<Employee> employees = employeeService.getEmployeeByPage(page,pageSize);
+        //then
+        assertEquals("Gavin",employees.get(page-1).getName());
+        assertEquals(2,employees.size());
+    }
+
 }
