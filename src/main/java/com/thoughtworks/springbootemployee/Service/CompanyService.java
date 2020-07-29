@@ -54,4 +54,12 @@ public class CompanyService {
         }
         return "delete fail!";
     }
+
+    public Company addCompany(Company newCompany) {
+        List<Company> companies = companyRepository.findAll();
+        if(companies.add(newCompany)){
+            return newCompany;
+        }
+        return null;
+    }
 }
