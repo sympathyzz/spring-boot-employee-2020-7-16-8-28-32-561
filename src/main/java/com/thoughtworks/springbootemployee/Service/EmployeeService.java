@@ -30,8 +30,7 @@ public class EmployeeService {
     }
 
     public Employee findByName(String employeeName) {
-        EmployeeController employeeController = new EmployeeController();
-        List<Employee> employees = employeeController.getAllData();
+        List<Employee> employees = (List<Employee>) employeeRepository.findAll();
 
         return employees.stream().filter(employee -> {
             return employeeName.equals(employee.getName());
