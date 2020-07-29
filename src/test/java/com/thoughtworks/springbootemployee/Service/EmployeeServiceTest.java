@@ -5,6 +5,7 @@ import com.thoughtworks.springbootemployee.respository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -99,19 +100,21 @@ public class EmployeeServiceTest {
     @Test
     void should_return_success_message_when_delete_employee_given_employee_name(){
         //given
+        Employee employee1=new Employee(1, "Gavin", 17, "male", 6000);
+        Employee employee2=new Employee(2, "Zach", 18, "female", 7000);
+        List<Employee> employees=new ArrayList<>();
+        employees.add(employee1);
+        employees.add(employee2);
         EmployeeRepository mockedEmployeeRepository = Mockito.mock(EmployeeRepository.class);
-        when(mockedEmployeeRepository.findAll()).thenReturn(
-                Arrays.asList(
-                        new Employee(1, "Gavin", 17, "male", 6000),
-                        new Employee(2, "Zach", 18, "female", 7000)
-                )
-        );
+        when(mockedEmployeeRepository.findAll()).thenReturn(employees);
         EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
-        String employeeName="Gavin";
-
+        String employeeName1="Gavin";
+        String employeeName2="AAA";
         //when
-        List<Employee> employees = employeeService.deleteEmployeeByName(employeeName);
+        String message1 = employeeService.deleteEmployeeByName(employeeName1);
+        String message2 = employeeService.deleteEmployeeByName(employeeName2);
         //then
-        assertEquals(1,employees.size());
+        assertEquals("delete success!",message1);
+        assertEquals("delete fail!",message2);
     }
 }

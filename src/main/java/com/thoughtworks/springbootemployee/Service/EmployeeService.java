@@ -7,8 +7,11 @@ import com.thoughtworks.springbootemployee.respository.EmployeeRepository;
 import java.util.List;
 import java.util.stream.Collectors;
 
+
 public class EmployeeService {
     private EmployeeRepository employeeRepository;
+    private static final String FAIL_MESSAGE = "fail";
+    private static final String SUCCESS_MESSAGE = "success";
 
     public EmployeeService(EmployeeRepository employeeRepository) {
         this.employeeRepository = employeeRepository;
@@ -32,10 +35,7 @@ public class EmployeeService {
 
     public Employee findByName(String employeeName) {
         List<Employee> employees = employeeRepository.findAll();
-
-        return employees.stream().filter(employee -> {
-            return employeeName.equals(employee.getName());
-        }).findFirst().orElse(null);
+        return employees.stream().filter(employee -> employee.getName().equals(employeeName)).findFirst().orElse(null);
     }
 
     public List<Employee> getAll() {
@@ -48,7 +48,14 @@ public class EmployeeService {
         return employees.stream().skip((page - 1) * pageSize).limit(pageSize).collect(Collectors.toList());
     }
 
-    public List<Employee> deleteEmployeeByName(String employeeName) {
-        return null;
+    public String deleteEmployeeByName(String employeeName) {
+        List<Employee> employees = employeeRepository.findAll();
+        Employee specifiedEmployee=findByName(employeeName);
+        if (specifiedEmployee!=null) {
+            if(employees.remove(specifiedEmployee )){
+                return "delete success!";
+            }
+        }
+        return "delete fail!";
     }
 }
