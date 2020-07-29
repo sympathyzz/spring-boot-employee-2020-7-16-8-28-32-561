@@ -43,10 +43,9 @@ public class EmployeeController {
     }
 
     @PostMapping
-    public List<Employee> addEmployee(){
-        Employee baiduEmployee = new Employee(5, "baidu1", 20, "male", 10000);
-        getAllData().add(baiduEmployee);
-        return getAllData();
+    public Employee addEmployee(Employee employee){
+        getAllData().add(employee);
+        return employee;
     }
 
     @PutMapping("/{employeeName}")
