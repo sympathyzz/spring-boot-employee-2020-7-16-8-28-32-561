@@ -46,7 +46,7 @@ public class CompanyController {
         return specifiedNameCompany.getEmployees();
     }
 
-    @GetMapping("")
+    @GetMapping
     public List<Company> getCompanies(@RequestParam(defaultValue="null") String page,@RequestParam(defaultValue="null") String pageSize){
         if(!page.equals("null")&&!pageSize.equals("null")){
             return getAllData().stream().skip((Integer.parseInt(page)-1)*Integer.parseInt(pageSize)).limit(Integer.parseInt(pageSize)).collect(Collectors.toList());
@@ -70,7 +70,7 @@ public class CompanyController {
         }
     }
 
-    @PostMapping("")
+    @PostMapping
     public List<Company> addCompany(){
         List<Employee> baiduEmployees=new ArrayList<>();
         Employee baiduEmployee1 = new Employee(5, "baidu1", 20, "male", 10000);
@@ -78,8 +78,8 @@ public class CompanyController {
         baiduEmployees.add(baiduEmployee1);
         baiduEmployees.add(baiduEmployee2);
         Company company=new Company("baidu",2,baiduEmployees);
-        companies.add(company);
-        return companies;
+        getAllData().add(company);
+        return getAllData();
     }
 
     @DeleteMapping("/{companyName}")
