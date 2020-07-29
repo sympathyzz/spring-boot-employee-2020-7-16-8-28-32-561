@@ -28,7 +28,8 @@ public class CompanyService {
         return null;
     }
 
-    public Company findByName(String companyName1) {
-        return null;
+    public Company findByName(String companyName) {
+        List<Company> companies = companyRepository.findAll();
+        return companies.stream().filter(company -> company.getCompanyName().equals(companyName)).findFirst().orElse(null);
     }
 }
