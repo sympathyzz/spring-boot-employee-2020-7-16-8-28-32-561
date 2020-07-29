@@ -7,6 +7,7 @@ import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.respository.CompanyRepository;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class CompanyService {
     private CompanyRepository companyRepository;
@@ -39,6 +40,7 @@ public class CompanyService {
     }
 
     public List<Company> getCompanyByPage(int page, int pageSize) {
-        return null;
+        List<Company> companies = companyRepository.findAll();
+        return companies.stream().skip((page - 1) * pageSize).limit(pageSize).collect(Collectors.toList());
     }
 }
