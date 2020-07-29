@@ -153,7 +153,7 @@ public class EmployeeServiceTest {
         List<Employee> returnedEmployees=employeeService.getEmployeeByGender(gender);
         //then
         for(Employee employee:returnedEmployees){
-            assertEquals("male",employee);
+            assertEquals("male",employee.getGender());
         }
     }
 
