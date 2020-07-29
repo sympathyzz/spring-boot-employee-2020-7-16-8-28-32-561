@@ -1,6 +1,5 @@
 package com.thoughtworks.springbootemployee.controller;
 
-import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +9,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/employees")
-public class EmployeeControl {
+public class EmployeeController {
     public static List<Employee> employees=new ArrayList<>();
     public List<Employee> getAllData(){
         Employee employee1=new Employee(1,"alibaba1",17,"male",6000);
