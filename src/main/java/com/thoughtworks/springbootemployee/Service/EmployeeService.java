@@ -59,6 +59,11 @@ public class EmployeeService {
         return "delete fail!";
     }
 
-    public void addEmployee(Employee newEmployee) {
+    public Employee addEmployee(Employee newEmployee) {
+        List<Employee> employees = employeeRepository.findAll();
+        if(employees.add(newEmployee)){
+            return newEmployee;
+        }
+        return null;
     }
 }

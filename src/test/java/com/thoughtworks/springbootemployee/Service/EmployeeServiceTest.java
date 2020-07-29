@@ -137,4 +137,24 @@ public class EmployeeServiceTest {
         assertNotNull(returnedEmployee);
     }
 
+    @Test
+    void should_return_male_employees_when_get_employee_given_male_gender(){
+        //given
+        EmployeeRepository mockedEmployeeRepository = Mockito.mock(EmployeeRepository.class);
+        when(mockedEmployeeRepository.findAll()).thenReturn(
+                Arrays.asList(
+                        new Employee(1, "Gavin", 17, "male", 6000),
+                        new Employee(2, "Zach", 18, "female", 7000)
+                )
+        );
+        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
+        String gender="male";
+        //when
+        List<Employee> returnedEmployees=employeeService.getEmployeeByGender(gender);
+        //then
+        for(Employee employee:returnedEmployees){
+            assertEquals("male",employee);
+        }
+    }
+
 }
