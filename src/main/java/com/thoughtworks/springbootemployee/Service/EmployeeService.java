@@ -6,6 +6,7 @@ import com.thoughtworks.springbootemployee.model.Employee;
 import java.util.List;
 
 public class EmployeeService {
+
     public Employee update(Employee newEmployee) {
         EmployeeController employeeController = new EmployeeController();
         List<Employee> employees = employeeController.getAllData();
