@@ -58,4 +58,7 @@ public class EmployeeService {
         }
         return "delete fail!";
     }
+
+    public void addEmployee(Employee newEmployee) {
+    }
 }

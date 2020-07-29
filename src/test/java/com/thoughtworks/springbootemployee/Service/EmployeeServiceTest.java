@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import static org.mockito.Mockito.when;
 
 
@@ -117,4 +117,24 @@ public class EmployeeServiceTest {
         assertEquals("delete success!",message1);
         assertEquals("delete fail!",message2);
     }
+
+    @Test
+    void should_return_new_employee_when_add_given_new_employee(){
+        //given
+        Employee employee1=new Employee(1, "Gavin", 17, "male", 6000);
+        Employee employee2=new Employee(2, "Zach", 18, "female", 7000);
+        List<Employee> employees=new ArrayList<>();
+        employees.add(employee1);
+        employees.add(employee2);
+        EmployeeRepository mockedEmployeeRepository = Mockito.mock(EmployeeRepository.class);
+        when(mockedEmployeeRepository.findAll()).thenReturn(employees);
+        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
+        Employee newEmployee=new Employee(3, "Spike", 17, "male", 6000);
+        //when
+        Employee returnedEmployee=employeeService.addEmployee(newEmployee);
+        //then
+        assertEquals(3,employees.size());
+        assertNotNull(returnedEmployee);
+    }
+
 }
