@@ -27,8 +27,8 @@ public class CompanyController {
         List<Employee> OOCLEmployees=new ArrayList<>();
         OOCLEmployees.add(employee3);
         OOCLEmployees.add(employee4);
-        Company company1=new Company(ALIBABA,2,ALIBABAEmployees);
-        Company company2=new Company(OOCL,2,OOCLEmployees);
+        Company company1=new Company(1,ALIBABA,2,ALIBABAEmployees);
+        Company company2=new Company(2,OOCL,2,OOCLEmployees);
         if(companies.size()==0){
             companies.add(company1);
             companies.add(company2);
@@ -77,7 +77,7 @@ public class CompanyController {
         Employee baiduEmployee2 = new Employee(6, "baidu2", 20, "male", 11000);
         baiduEmployees.add(baiduEmployee1);
         baiduEmployees.add(baiduEmployee2);
-        Company company=new Company("baidu",2,baiduEmployees);
+        Company company=new Company(3,"baidu",2,baiduEmployees);
         getAllData().add(company);
         return getAllData();
     }
