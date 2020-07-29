@@ -44,7 +44,14 @@ public class CompanyService {
         return companies.stream().skip((page - 1) * pageSize).limit(pageSize).collect(Collectors.toList());
     }
 
-    public String deleteCompanyById(Integer companyId1) {
-        return null;
+    public String deleteCompanyByName(String companyName) {
+        List<Company> companies = companyRepository.findAll();
+        Company specifiedCompany=findByName(companyName);
+        if (specifiedCompany!=null) {
+            if(companies.remove(specifiedCompany )){
+                return "delete success!";
+            }
+        }
+        return "delete fail!";
     }
 }
