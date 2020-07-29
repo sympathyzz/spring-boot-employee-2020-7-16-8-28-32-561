@@ -14,7 +14,7 @@ public class EmployeeServiceTest {
         Employee newEmployee= new Employee(1,"zach",18,"male",1000);
 
         //when
-        Employee returnEmployee = employeeService.update(newEmployee.getId());
+        Employee returnEmployee = employeeService.update(newEmployee);
 
         //then
         assertEquals(returnEmployee,newEmployee);
