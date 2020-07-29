@@ -7,6 +7,7 @@ import org.mockito.Mockito;
 
 import static org.junit.Assert.assertEquals;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.when;
 
 
 public class EmployeeServiceTest {
@@ -14,11 +15,11 @@ public class EmployeeServiceTest {
     void should_return_employee_when_update_given_employee_id(){
         //given
         EmployeeRepository mockedEmployeeRepository= Mockito.mock(EmployeeRepository.class);
-        given(mockedEmployeeRepository.findById(1)).willReturn(
+        when(mockedEmployeeRepository.findById(1)).thenReturn(
                 new Employee(1,"Gavin",17,"male",6000)
         );
 
-        EmployeeService employeeService = new EmployeeService();
+        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
         Employee newEmployee= new Employee(1,"zach",18,"male",1000);
 
         //when
