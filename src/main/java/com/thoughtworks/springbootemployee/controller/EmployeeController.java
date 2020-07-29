@@ -44,8 +44,10 @@ public class EmployeeController {
 
     @PostMapping
     public Employee addEmployee(Employee employee){
-        getAllData().add(employee);
-        return employee;
+        if(getAllData().add(employee)){
+            return employee;
+        }
+        return null;
     }
 
     @PutMapping("/{employeeName}")
