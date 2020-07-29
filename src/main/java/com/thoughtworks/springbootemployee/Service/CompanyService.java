@@ -37,4 +37,8 @@ public class CompanyService {
         List<Company> companies = companyRepository.findAll();
         return companies;
     }
+
+    public List<Company> getCompanyByPage(int page, int pageSize) {
+        return null;
+    }
 }

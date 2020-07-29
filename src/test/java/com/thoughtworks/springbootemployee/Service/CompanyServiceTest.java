@@ -95,4 +95,22 @@ public class CompanyServiceTest {
 
     }
 
+    @Test
+    void should_return_specified_page_companies_when_get_companies_by_page_given_page_and_page_size() {
+        //given
+        CompanyRepository mockedCompanyRepository = Mockito.mock(CompanyRepository.class);
+        when(mockedCompanyRepository.findAll()).thenReturn(
+                generateCompanyList()
+        );
+        CompanyService companyService = new CompanyService(mockedCompanyRepository);
+        int page = 1;
+        int pageSize = 2;
+
+        //when
+        List<Company> companies = companyService.getCompanyByPage(page, pageSize);
+        //then
+        assertEquals("alibaba", companies.get(page - 1).getCompanyName());
+        assertEquals(2, companies.size());
+    }
+
 }
