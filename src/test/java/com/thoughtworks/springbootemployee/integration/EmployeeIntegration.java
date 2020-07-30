@@ -87,4 +87,15 @@ public class EmployeeIntegration {
                 .andExpect(jsonPath("$.length()").value(3));
     }
 
+    @Test
+    void should_return_employee_when_find_given_employee_id() throws Exception {
+        //given
+        employeeRepository.save(new Employee(1, "Zach", 18, "female", 7000));
+        Integer id=1;
+
+        mockMvc.perform(get("/employees/"+id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(id));
+    }
+
 }
