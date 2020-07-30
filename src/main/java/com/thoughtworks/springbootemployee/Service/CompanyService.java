@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.Service;
 
+import com.thoughtworks.springbootemployee.exception.NoSuchDataException;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.respository.CompanyRepository;
@@ -20,18 +21,19 @@ public class CompanyService {
 
     public Company update(Integer companyId,Company newCompany) {
         Optional<Company> company = companyRepository.findById(companyId);
-        if(company!=null){
-            if (newCompany.getCompanyName()!=null){
-                company.get().setCompanyName(newCompany.getCompanyName());
-            }
-            if (newCompany.getEmployeesNumber()!=null){
-                company.get().setEmployeesNumber(newCompany.getEmployeesNumber());
-            }
-            if (newCompany.getEmployees()!=null){
-                company.get().setEmployees(newCompany.getEmployees());
-            }
-            companyRepository.save(company.get());
+        if(!company.isPresent()){
+            throw new NoSuchDataException();
         }
+        if (newCompany.getCompanyName()!=null){
+            company.get().setCompanyName(newCompany.getCompanyName());
+        }
+        if (newCompany.getEmployeesNumber()!=null){
+            company.get().setEmployeesNumber(newCompany.getEmployeesNumber());
+        }
+        if (newCompany.getEmployees()!=null){
+            company.get().setEmployees(newCompany.getEmployees());
+        }
+        companyRepository.save(company.get());
         return company.get();
     }
 
