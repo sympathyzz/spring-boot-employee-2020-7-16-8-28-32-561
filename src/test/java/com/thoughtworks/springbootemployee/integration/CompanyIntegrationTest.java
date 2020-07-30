@@ -13,8 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -56,6 +55,20 @@ public class CompanyIntegrationTest {
         mockMvc.perform(delete("/companies/"+1))
                 .andExpect(status().isAccepted());
 
+    }
+
+    @Test
+    void should_return_company_when_update_given_company_id_and_company() throws Exception {
+        //given
+        companyRepository.save(new Company(1,"alibaba1",3,null));
+        Company company = new Company(1,"alibaba2",4,null);
+        String employeeJson = JSONObject.toJSONString(company);
+
+        mockMvc.perform(put("/companies/"+1).contentType(MediaType.APPLICATION_JSON).content(employeeJson))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(company.getId()))
+                .andExpect(jsonPath("$.companyName").value(company.getCompanyName()))
+                .andExpect(jsonPath("$.employeesNumber").value(company.getEmployeesNumber()));
     }
 
 }
