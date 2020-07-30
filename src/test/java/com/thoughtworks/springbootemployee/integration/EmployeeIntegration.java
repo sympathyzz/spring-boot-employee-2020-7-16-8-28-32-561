@@ -12,6 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -96,6 +97,21 @@ public class EmployeeIntegration {
         mockMvc.perform(get("/employees/"+id))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.id").value(id));
+    }
+
+    @Test
+    void should_return_employees_when_find_given_page_and_page_size() throws Exception {
+        //given
+        employeeRepository.save(new Employee(1, "Zach", 18, "female", 7000));
+        employeeRepository.save(new Employee(2, "Zach2", 18, "female", 7000));
+        employeeRepository.save(new Employee(3, "Zach3", 18, "female", 7000));
+        Integer page=1;
+        Integer pageSize=2;
+
+        mockMvc.perform(get("/employees?page="+page+"&pageSize="+pageSize))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].id").value(1))
+                .andExpect(jsonPath("$[1].id").value(2));
     }
 
 }
