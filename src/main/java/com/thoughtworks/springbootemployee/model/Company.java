@@ -11,7 +11,7 @@ public class Company {
     private String companyName;
     private Integer employeesNumber;
 
-    @OneToMany(targetEntity = Employee.class, mappedBy = "companyId")
+    @OneToMany(cascade = {CascadeType.ALL},targetEntity = Employee.class, mappedBy = "companyId")
     private List<Employee> employees;
 
     public Company() {
