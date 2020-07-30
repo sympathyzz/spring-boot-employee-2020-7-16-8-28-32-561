@@ -63,8 +63,8 @@ public class EmployeeService {
     public Boolean deleteEmployeeById(Integer employeeId) {
         Optional<Employee> employee = employeeRepository.findById(employeeId);
         employee.ifPresent(employeeRepository::delete);
-        if (employeeRepository.findById(employeeId) == null) {
-            return false;
+        if (!employee.isPresent()) {
+            throw new NoSuchDataException();
         }
         return true;
     }
