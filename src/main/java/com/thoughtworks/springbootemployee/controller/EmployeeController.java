@@ -44,13 +44,13 @@ public class EmployeeController {
     }
 
     @PutMapping("/{employeeId}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public Employee updateEmployee(@PathVariable Integer employeeId,@RequestBody Employee employee){
         return employeeService.update(employeeId,employee);
     }
 
     @DeleteMapping("/{employeeId}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public void deleteEmployee(@PathVariable Integer employeeId){
         employeeService.deleteEmployeeById(employeeId);
     }

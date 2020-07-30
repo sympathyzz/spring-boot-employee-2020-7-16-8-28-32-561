@@ -44,13 +44,13 @@ public class CompanyController {
     }
 
     @PostMapping
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.CREATED)
     public Company addCompany(Company company){
         return companyService.addCompany(company);
     }
 
     @DeleteMapping("/{companyId}")
-    @ResponseStatus(HttpStatus.OK)
+    @ResponseStatus(HttpStatus.ACCEPTED)
     public void deleteCompany(@PathVariable Integer companyId){
         companyService.deleteCompanyById(companyId);
     }
