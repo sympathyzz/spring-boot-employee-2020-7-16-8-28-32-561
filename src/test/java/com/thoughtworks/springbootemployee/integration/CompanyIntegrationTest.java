@@ -71,4 +71,16 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$.employeesNumber").value(company.getEmployeesNumber()));
     }
 
+    @Test
+    void should_return_companies_when_find_all_given_no_parameter() throws Exception {
+        //given
+        companyRepository.save(new Company(1,"alibaba1",3,null));
+        companyRepository.save(new Company(2,"alibaba2",3,null));
+        companyRepository.save(new Company(3,"alibaba3",3,null));
+
+        mockMvc.perform(get("/companies/"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()").value(3));
+    }
+
 }
