@@ -13,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static java.util.Arrays.asList;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -109,4 +110,18 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$[1].id").value(2));
     }
 
+    @Test
+    void should_return_employees_when_find_given_company_id() throws Exception {
+        //given
+        Employee employee1 = new Employee(1, "Zach", 18, "female", 7000,1);
+        Employee employee2 = new Employee(2, "Zach", 18, "female", 7000,1);
+        companyRepository.save(new Company(1,"alibaba1",3,asList(employee1,employee2)));
+        Integer id=1;
+
+        mockMvc.perform(get("/companies/"+id+"/employees"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.size()").value(2))
+                .andExpect(jsonPath("$[0].id").value(employee1.getId()))
+                .andExpect(jsonPath("$[1].id").value(employee2.getId()));
+    }
 }
