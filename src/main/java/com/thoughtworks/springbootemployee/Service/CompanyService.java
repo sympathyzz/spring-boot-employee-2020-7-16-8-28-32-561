@@ -38,7 +38,11 @@ public class CompanyService {
     }
 
     public Company findById(Integer companyId) {
-        return companyRepository.findById(companyId).get();
+        Optional<Company> company=companyRepository.findById(companyId);
+        if(!company.isPresent()){
+            throw new NoSuchDataException();
+        }
+        return company.get();
     }
 
     public List<Company> getAll() {
