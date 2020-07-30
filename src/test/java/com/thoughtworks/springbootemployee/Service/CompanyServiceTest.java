@@ -3,18 +3,14 @@ package com.thoughtworks.springbootemployee.Service;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.respository.CompanyRepository;
-import com.thoughtworks.springbootemployee.respository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -36,10 +32,8 @@ public class CompanyServiceTest {
         OOCLEmployees.add(employee4);
         Company company1=new Company(1,"alibaba",2,alibabaEmployees);
         Company company2=new Company(2,"oocl",2,OOCLEmployees);
-        if(companies.size()==0){
-            companies.add(company1);
-            companies.add(company2);
-        }
+        companies.add(company1);
+        companies.add(company2);
         return companies;
     }
 
