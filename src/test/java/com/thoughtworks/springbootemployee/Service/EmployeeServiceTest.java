@@ -135,15 +135,11 @@ public class EmployeeServiceTest {
     @Test
     void should_return_success_message_when_delete_employee_given_employee_id() {
         //given
-        Employee employee1 = new Employee(1, "Gavin", 17, "male", 6000);
-        Employee employee2 = new Employee(2, "Zach", 18, "female", 7000);
-        List<Employee> employees = new ArrayList<>();
-        employees.add(employee1);
-        employees.add(employee2);
-        EmployeeRepository mockedEmployeeRepository = Mockito.mock(EmployeeRepository.class);
-        when(mockedEmployeeRepository.findAll()).thenReturn(employees);
-        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
         Integer employeeId = 1;
+        EmployeeRepository mockedEmployeeRepository = Mockito.mock(EmployeeRepository.class);
+        when(mockedEmployeeRepository.findById(employeeId)).thenReturn(Optional.of(new Employee(1,"gavin",20,"male",1000)));
+        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
+
         //when
         Boolean result = employeeService.deleteEmployeeById(employeeId);
         //then
