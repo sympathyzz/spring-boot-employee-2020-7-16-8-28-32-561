@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.Service;
 
+import com.thoughtworks.springbootemployee.exception.NoSuchDataException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.respository.EmployeeRepository;
 import org.junit.jupiter.api.Test;
@@ -38,6 +39,23 @@ public class EmployeeServiceTest {
         assertEquals(returnEmployee.getAge(), newEmployee.getAge());
         assertEquals(returnEmployee.getGender(), newEmployee.getGender());
         assertEquals(returnEmployee.getSalary(), newEmployee.getSalary());
+    }
+
+    @Test
+    void should_throw_NoSuchDataException_when_update_given_wrong_employee_id() {
+        //given
+        EmployeeRepository mockedEmployeeRepository = Mockito.mock(EmployeeRepository.class);
+        Integer wrong_id = 9999;
+        Employee newEmployee = new Employee(1, "zach", 18, "male", 1000);
+
+        when(mockedEmployeeRepository.findById(wrong_id)).thenReturn(null);
+        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
+
+        //when
+        Throwable throwable = assertThrows(NoSuchDataException.class, () -> employeeService.update(1, newEmployee));
+
+        //then
+        assertEquals(NoSuchDataException.class, throwable.getClass());
     }
 
     @Test
