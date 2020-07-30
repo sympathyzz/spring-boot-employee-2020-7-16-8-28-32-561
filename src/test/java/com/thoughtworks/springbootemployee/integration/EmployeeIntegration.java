@@ -75,4 +75,16 @@ public class EmployeeIntegration {
                 .andExpect(jsonPath("$.salary").value(employee.getSalary()));
     }
 
+    @Test
+    void should_return_employees_when_find_all_given_no_parameter() throws Exception {
+        //given
+        employeeRepository.save(new Employee(1, "Zach", 18, "female", 7000));
+        employeeRepository.save(new Employee(2, "Zach2", 18, "female", 7000));
+        employeeRepository.save(new Employee(3, "Zach3", 18, "female", 7000));
+
+        mockMvc.perform(get("/employees/"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.length()").value(3));
+    }
+
 }
