@@ -119,7 +119,7 @@ public class EmployeeIntegrationTest {
         //given
         employeeRepository.save(new Employee(1, "Zach", 18, "male", 7000));
         employeeRepository.save(new Employee(2, "Zach2", 18, "female", 7000));
-        employeeRepository.save(new Employee(3, "Zach3", 18, "malem", 7000));
+        employeeRepository.save(new Employee(3, "Zach3", 18, "male", 7000));
         String gender="male";
         mockMvc.perform(get("/employees?gender="+gender))
                 .andExpect(status().isOk())
