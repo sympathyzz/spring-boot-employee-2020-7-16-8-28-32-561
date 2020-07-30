@@ -18,15 +18,21 @@ public class EmployeeController {
     @Autowired
     EmployeeService employeeService;
 
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Employee> getEmployees(){
+        return employeeService.getAll();
+    }
+
     @GetMapping(params = {"page","pageNum"})
     @ResponseStatus(HttpStatus.OK)
-    public Page<Employee> getEmployees(@RequestParam Integer page, @RequestParam Integer pageSize){
+    public Page<Employee> getEmployeesByPage(@RequestParam Integer page, @RequestParam Integer pageSize){
             return employeeService.getEmployeeByPage(page,pageSize);
     }
 
     @GetMapping(params = "gender")
     @ResponseStatus(HttpStatus.OK)
-    public List<Employee> getEmployees(@RequestParam String gender){
+    public List<Employee> getEmployeesByGender(@RequestParam String gender){
         return employeeService.getEmployeeByGender(gender);
     }
 

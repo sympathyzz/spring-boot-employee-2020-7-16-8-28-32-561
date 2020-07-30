@@ -17,6 +17,12 @@ public class CompanyController {
     @Autowired
     CompanyService companyService;
 
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Company> getCompanies(){
+        return companyService.getAll();
+    }
+
     @GetMapping("/{companyId}")
     @ResponseStatus(HttpStatus.OK)
     public Company getSpecifiedIdCompany(@PathVariable Integer companyId){
