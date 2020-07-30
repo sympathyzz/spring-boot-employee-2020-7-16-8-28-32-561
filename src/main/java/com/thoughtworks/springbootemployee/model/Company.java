@@ -1,12 +1,22 @@
 package com.thoughtworks.springbootemployee.model;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.List;
 
+@Entity
 public class Company {
+    @Id
     private Integer id;
     private String companyName;
     private Integer employeesNumber;
+
+    @OneToMany(targetEntity = Employee.class, mappedBy = "companyId")
     private List<Employee> employees;
+
+    public Company() {
+    }
 
     public Company(Integer id, String companyName, Integer employeesNumber, List<Employee> employees) {
         this.id = id;
