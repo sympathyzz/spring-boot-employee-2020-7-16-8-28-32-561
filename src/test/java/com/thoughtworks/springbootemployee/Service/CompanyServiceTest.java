@@ -97,6 +97,24 @@ public class CompanyServiceTest {
     }
 
     @Test
+    void should_throw_NoSuchDataException_when_find_given_wrong_company_id() {
+        //given
+        Integer wrong_id = 999;
+
+        CompanyRepository mockedCompanyRepository = Mockito.mock(CompanyRepository.class);
+        CompanyService companyService = new CompanyService((mockedCompanyRepository));
+        when(mockedCompanyRepository.findById(wrong_id)).thenReturn(
+                Optional.ofNullable(null)
+        );
+
+        //when
+        Throwable throwable = assertThrows(NoSuchDataException.class, () -> companyService.findById(wrong_id));
+
+        //then
+        assertEquals(NoSuchDataException.class, throwable.getClass());
+    }
+
+    @Test
     void should_return_all_companies_when_get_all_given_no_parameter() {
         //given
         CompanyRepository mockedCompanyRepository = Mockito.mock(CompanyRepository.class);
