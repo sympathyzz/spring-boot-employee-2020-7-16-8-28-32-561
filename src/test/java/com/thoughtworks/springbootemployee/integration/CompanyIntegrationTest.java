@@ -2,6 +2,7 @@ package com.thoughtworks.springbootemployee.integration;
 
 import com.alibaba.fastjson.JSONObject;
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.respository.CompanyRepository;
 import com.thoughtworks.springbootemployee.respository.EmployeeRepository;
 import org.junit.jupiter.api.AfterEach;
@@ -12,6 +13,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -44,6 +46,16 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$.companyName").value(newCompany.getCompanyName()))
                 .andExpect(jsonPath("$.employeesNumber").value(newCompany.getEmployeesNumber()))
                 .andExpect(jsonPath("$.employees").value(newCompany.getEmployees()));
+    }
+
+    @Test
+    void should_return_202_when_delete_given_company_id() throws Exception {
+        //given
+        companyRepository.save(new Company(1,"alibaba1",3,null));
+
+        mockMvc.perform(delete("/companies/"+1))
+                .andExpect(status().isAccepted());
+
     }
 
 }
