@@ -13,8 +13,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.mockito.Mockito.mock;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -58,6 +57,22 @@ public class EmployeeIntegration {
         mockMvc.perform(delete("/employees/"+1))
                 .andExpect(status().isAccepted());
 
+    }
+
+    @Test
+    void should_return_employee_when_update_given_employee_id_and_employee() throws Exception {
+        //given
+        employeeRepository.save(new Employee(1, "Zach", 18, "female", 7000));
+        Employee employee = new Employee(1, "Zach2", 19, "female", 8000);
+        String employeeJson = JSONObject.toJSONString(employee);
+
+        mockMvc.perform(put("/employees/"+1).contentType(MediaType.APPLICATION_JSON).content(employeeJson))
+                .andExpect(status().isCreated())
+                .andExpect(jsonPath("$.id").value(employee.getId()))
+                .andExpect(jsonPath("$.name").value(employee.getName()))
+                .andExpect(jsonPath("$.age").value(employee.getAge()))
+                .andExpect(jsonPath("$.gender").value(employee.getGender()))
+                .andExpect(jsonPath("$.salary").value(employee.getSalary()));
     }
 
 }
