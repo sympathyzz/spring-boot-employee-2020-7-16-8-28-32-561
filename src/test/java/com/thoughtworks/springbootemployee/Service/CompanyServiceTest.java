@@ -148,17 +148,16 @@ public class CompanyServiceTest {
     @Test
     void should_return_success_message_when_delete_company_given_company_name() {
         //given
+        Integer wrong_id = 999;
         CompanyRepository mockedCompanyRepository = Mockito.mock(CompanyRepository.class);
-        when(mockedCompanyRepository.findAll()).thenReturn(
-                generateCompanyList()
+        when(mockedCompanyRepository.findById(wrong_id)).thenReturn(
+                Optional.ofNullable(null)
         );
         CompanyService companyService = new CompanyService(mockedCompanyRepository);
-        Integer companyId = 1;
         //when
-        Boolean result = companyService.deleteCompanyById(companyId);
-
+        Throwable throwable = assertThrows(NoSuchDataException.class, () -> companyService.deleteCompanyById(wrong_id));
         //then
-        assertEquals(true, result);
+        assertEquals(NoSuchDataException.class, throwable.getClass());
     }
 
     @Test
