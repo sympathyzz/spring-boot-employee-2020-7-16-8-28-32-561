@@ -47,9 +47,9 @@ public class EmployeeServiceTest {
         EmployeeRepository mockedEmployeeRepository = Mockito.mock(EmployeeRepository.class);
         Integer wrong_id = 9999;
         Employee newEmployee = new Employee(1, "zach", 18, "male", 1000);
-
-        when(mockedEmployeeRepository.findById(wrong_id)).thenReturn(null);
         EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
+
+        when(mockedEmployeeRepository.findById(wrong_id)).thenReturn(Optional.ofNullable(null));
 
         //when
         Throwable throwable = assertThrows(NoSuchDataException.class, () -> employeeService.update(1, newEmployee));
@@ -57,6 +57,8 @@ public class EmployeeServiceTest {
         //then
         assertEquals(NoSuchDataException.class, throwable.getClass());
     }
+
+
 
     @Test
     void should_return_specifiedEmployee_when_find_employee_given_id() {
@@ -75,6 +77,8 @@ public class EmployeeServiceTest {
         assertEquals("Gavin", returnEmployee.getName());
 
     }
+
+
 
     @Test
     void should_return_all_employee_when_get_all_given_no_parameter() {

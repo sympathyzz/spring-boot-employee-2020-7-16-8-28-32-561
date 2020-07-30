@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.Service;
 
+import com.thoughtworks.springbootemployee.exception.NoSuchDataException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.respository.EmployeeRepository;
 import org.springframework.data.domain.Page;
@@ -17,29 +18,36 @@ public class EmployeeService {
         this.employeeRepository = employeeRepository;
     }
 
-    public Employee update(Integer employeeId,Employee newEmployee) {
+    public Employee update(Integer employeeId, Employee newEmployee) {
         Optional<Employee> employee = employeeRepository.findById(employeeId);
-        if(employee!=null){
-            if (newEmployee.getName()!=null){
-                employee.get().setName(newEmployee.getName());
-            }
-            if (newEmployee.getAge()!=null){
-                employee.get().setAge(newEmployee.getAge());
-            }
-            if (newEmployee.getGender()!=null){
-                employee.get().setGender(newEmployee.getGender());
-            }
-            if (newEmployee.getSalary()!=null){
-                employee.get().setSalary(newEmployee.getSalary());
-            }
-            employeeRepository.save(employee.get());
+        System.out.println(employee);
+        System.out.println(employee == null);
+        if (!employee.isPresent()) {
+            System.out.println("1");
+            throw new NoSuchDataException();
         }
+        if (newEmployee.getName() != null) {
+            employee.get().setName(newEmployee.getName());
+        }
+        if (newEmployee.getAge() != null) {
+            employee.get().setAge(newEmployee.getAge());
+        }
+        if (newEmployee.getGender() != null) {
+            employee.get().setGender(newEmployee.getGender());
+        }
+        if (newEmployee.getSalary() != null) {
+            employee.get().setSalary(newEmployee.getSalary());
+        }
+        employeeRepository.save(employee.get());
         return employee.get();
     }
 
 
     public Employee findById(Integer employeeId) {
-        return employeeRepository.findById(employeeId).get();
+        Optional<Employee> employee = employeeRepository.findById(employeeId);
+        if (!employee.isPresent())
+            throw new NoSuchDataException();
+        return employee.get();
     }
 
     public List<Employee> getAll() {
@@ -48,14 +56,14 @@ public class EmployeeService {
     }
 
     public Page<Employee> getEmployeeByPage(Integer page, Integer pageSize) {
-        return employeeRepository.findAll(PageRequest.of(page,pageSize));
+        return employeeRepository.findAll(PageRequest.of(page, pageSize));
     }
 
 
     public Boolean deleteEmployeeById(Integer employeeId) {
-        Optional<Employee> employee=employeeRepository.findById(employeeId);
+        Optional<Employee> employee = employeeRepository.findById(employeeId);
         employee.ifPresent(employeeRepository::delete);
-        if(employeeRepository.findById(employeeId)==null){
+        if (employeeRepository.findById(employeeId) == null) {
             return false;
         }
         return true;
