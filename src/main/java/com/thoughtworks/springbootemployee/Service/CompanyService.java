@@ -37,6 +37,9 @@ public class CompanyService {
     public Company findByName(String companyName) {
         return companyRepository.findByName(companyName).get();
     }
+    public Company findById(Integer companyId) {
+        return companyRepository.findById(companyId).get();
+    }
 
     public List<Company> getAll() {
         List<Company> companies = companyRepository.findAll();
@@ -52,9 +55,13 @@ public class CompanyService {
         company.ifPresent(companyRepository::delete);
     }
 
-    public void deleteCompanyById(Integer companyId) {
+    public Boolean deleteCompanyById(Integer companyId) {
         Optional<Company> company=companyRepository.findById(companyId);
         company.ifPresent(companyRepository::delete);
+        if(companyRepository.findById(companyId)==null){
+            return false;
+        }
+        return true;
     }
 
     public Company addCompany(Company newCompany) {

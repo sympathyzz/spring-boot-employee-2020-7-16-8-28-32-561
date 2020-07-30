@@ -29,6 +29,9 @@ public class EmployeeService {
             if (newEmployee.getGender()!=null){
                 employee.get().setGender(newEmployee.getGender());
             }
+            if (newEmployee.getSalary()!=null){
+                employee.get().setSalary(newEmployee.getSalary());
+            }
             employeeRepository.save(employee.get());
         }
         return employee.get();
@@ -56,9 +59,13 @@ public class EmployeeService {
        employee.ifPresent(employeeRepository::delete);
     }
 
-    public void deleteEmployeeById(Integer employeeId) {
+    public Boolean deleteEmployeeById(Integer employeeId) {
         Optional<Employee> employee=employeeRepository.findById(employeeId);
         employee.ifPresent(employeeRepository::delete);
+        if(employeeRepository.findById(employeeId)==null){
+            return false;
+        }
+        return true;
     }
 
     public Employee addEmployee(Employee newEmployee) {
