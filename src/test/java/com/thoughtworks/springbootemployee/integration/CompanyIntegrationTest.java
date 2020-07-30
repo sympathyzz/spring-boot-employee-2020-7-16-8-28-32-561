@@ -83,4 +83,15 @@ public class CompanyIntegrationTest {
                 .andExpect(jsonPath("$.size()").value(3));
     }
 
+    @Test
+    void should_return_company_when_find_given_company_id() throws Exception {
+        //given
+        companyRepository.save(new Company(1,"alibaba1",3,null));
+        Integer id=1;
+
+        mockMvc.perform(get("/companies/"+id))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.id").value(id));
+    }
+
 }
