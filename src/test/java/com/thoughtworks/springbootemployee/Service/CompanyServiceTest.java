@@ -20,10 +20,10 @@ public class CompanyServiceTest {
 
     private List<Company> generateCompanyList() {
         List<Company> companies = new ArrayList<>();
-        Employee employee1 = new Employee(1, "alibaba1", 17, "male", 6000);
-        Employee employee2 = new Employee(2, "alibaba2", 18, "female", 7000);
-        Employee employee3 = new Employee(3, "oocl1", 19, "male", 8000);
-        Employee employee4 = new Employee(4, "oocl2", 20, "female", 9000);
+        Employee employee1 = new Employee(1, "alibaba1", 17, "male", 6000,1);
+        Employee employee2 = new Employee(2, "alibaba2", 18, "female", 7000,1);
+        Employee employee3 = new Employee(3, "oocl1", 19, "male", 8000,2);
+        Employee employee4 = new Employee(4, "oocl2", 20, "female", 9000,2);
         List<Employee> alibabaEmployees = new ArrayList<>();
         alibabaEmployees.add(employee1);
         alibabaEmployees.add(employee2);
@@ -41,8 +41,8 @@ public class CompanyServiceTest {
     void should_return_company_when_update_given_company_id() {
         //given
         List<Employee> baiduEmployees = new ArrayList<>();
-        Employee baiduEmployee1 = new Employee(5, "baidu1", 20, "male", 10000);
-        Employee baiduEmployee2 = new Employee(6, "baidu2", 20, "male", 11000);
+        Employee baiduEmployee1 = new Employee(5, "baidu1", 20, "male", 10000,1);
+        Employee baiduEmployee2 = new Employee(6, "baidu2", 20, "male", 11000,1);
         baiduEmployees.add(baiduEmployee1);
         baiduEmployees.add(baiduEmployee2);
         Company newCompany = new Company(1, "baidu", 2, baiduEmployees);
@@ -164,8 +164,8 @@ public class CompanyServiceTest {
     void should_return_new_company_when_add_given_new_company() {
         //given
         List<Employee> baiduEmployees = new ArrayList<>();
-        Employee baiduEmployee1 = new Employee(5, "baidu1", 20, "male", 10000);
-        Employee baiduEmployee2 = new Employee(6, "baidu2", 20, "male", 11000);
+        Employee baiduEmployee1 = new Employee(5, "baidu1", 20, "male", 10000,1);
+        Employee baiduEmployee2 = new Employee(6, "baidu2", 20, "male", 11000,1);
         baiduEmployees.add(baiduEmployee1);
         baiduEmployees.add(baiduEmployee2);
         Company newCompany = new Company(3, "baidu", 2, baiduEmployees);

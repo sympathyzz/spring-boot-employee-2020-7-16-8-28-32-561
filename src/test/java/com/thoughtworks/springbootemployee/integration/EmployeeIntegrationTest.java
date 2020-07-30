@@ -37,7 +37,7 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_employee_when_add_given_employee() throws Exception {
         //given
-        Employee employee = new Employee(null, "Zach", 18, "female", 7000);
+        Employee employee = new Employee(null, "Zach", 18, "female", 7000,1);
         String employeeJson = JSONObject.toJSONString(employee);
 
         mockMvc.perform(post("/employees").contentType(MediaType.APPLICATION_JSON).content(employeeJson))
@@ -53,7 +53,7 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_202_when_delete_given_employee_id() throws Exception {
         //given
-        employeeRepository.save(new Employee(1, "Zach", 18, "female", 7000));
+        employeeRepository.save(new Employee(1, "Zach", 18, "female", 7000,1));
 
         mockMvc.perform(delete("/employees/"+1))
                 .andExpect(status().isAccepted());
@@ -63,8 +63,8 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_employee_when_update_given_employee_id_and_employee() throws Exception {
         //given
-        employeeRepository.save(new Employee(1, "Zach", 18, "female", 7000));
-        Employee employee = new Employee(1, "Zach2", 19, "female", 8000);
+        employeeRepository.save(new Employee(1, "Zach", 18, "female", 7000,1));
+        Employee employee = new Employee(1, "Zach2", 19, "female", 8000,1);
         String employeeJson = JSONObject.toJSONString(employee);
 
         mockMvc.perform(put("/employees/"+1).contentType(MediaType.APPLICATION_JSON).content(employeeJson))
@@ -79,9 +79,9 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_employees_when_find_all_given_no_parameter() throws Exception {
         //given
-        employeeRepository.save(new Employee(1, "Zach", 18, "female", 7000));
-        employeeRepository.save(new Employee(2, "Zach2", 18, "female", 7000));
-        employeeRepository.save(new Employee(3, "Zach3", 18, "female", 7000));
+        employeeRepository.save(new Employee(1, "Zach", 18, "female", 7000,1));
+        employeeRepository.save(new Employee(2, "Zach2", 18, "female", 7000,1));
+        employeeRepository.save(new Employee(3, "Zach3", 18, "female", 7000,1));
 
         mockMvc.perform(get("/employees/"))
                 .andExpect(status().isOk())
@@ -91,7 +91,7 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_employee_when_find_given_employee_id() throws Exception {
         //given
-        employeeRepository.save(new Employee(1, "Zach", 18, "female", 7000));
+        employeeRepository.save(new Employee(1, "Zach", 18, "female", 7000,1));
         Integer id=1;
 
         mockMvc.perform(get("/employees/"+id))
@@ -102,9 +102,9 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_employees_when_find_given_page_and_page_size() throws Exception {
         //given
-        employeeRepository.save(new Employee(1, "Zach", 18, "female", 7000));
-        employeeRepository.save(new Employee(2, "Zach2", 18, "female", 7000));
-        employeeRepository.save(new Employee(3, "Zach3", 18, "female", 7000));
+        employeeRepository.save(new Employee(1, "Zach", 18, "female", 7000,1));
+        employeeRepository.save(new Employee(2, "Zach2", 18, "female", 7000,1));
+        employeeRepository.save(new Employee(3, "Zach3", 18, "female", 7000,1));
         Integer page=1;
         Integer pageSize=2;
 
@@ -117,9 +117,9 @@ public class EmployeeIntegrationTest {
     @Test
     void should_return_male_employees_when_find_given_male_gender() throws Exception {
         //given
-        employeeRepository.save(new Employee(1, "Zach", 18, "male", 7000));
-        employeeRepository.save(new Employee(2, "Zach2", 18, "female", 7000));
-        employeeRepository.save(new Employee(3, "Zach3", 18, "male", 7000));
+        employeeRepository.save(new Employee(1, "Zach", 18, "male", 7000,1));
+        employeeRepository.save(new Employee(2, "Zach2", 18, "female", 7000,1));
+        employeeRepository.save(new Employee(3, "Zach3", 18, "male", 7000,1));
         String gender="male";
         mockMvc.perform(get("/employees?gender="+gender))
                 .andExpect(status().isOk())
