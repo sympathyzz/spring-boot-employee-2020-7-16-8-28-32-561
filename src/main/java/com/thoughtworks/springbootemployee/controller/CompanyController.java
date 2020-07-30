@@ -19,15 +19,15 @@ public class CompanyController {
     @Autowired
     CompanyService companyService;
 
-    @GetMapping("/{companyName}")
+    @GetMapping("/{companyId}")
     @ResponseStatus(HttpStatus.OK)
-    public Company getSpecifiedNameCompany(@PathVariable String companyName){
-        return companyService.findByName(companyName);
+    public Company getSpecifiedIdCompany(@PathVariable Integer companyId){
+        return companyService.findById(companyId);
     }
-    @GetMapping("/{companyName}/employees")
+    @GetMapping("/{companyId}/employees")
     @ResponseStatus(HttpStatus.OK)
-    public List<Employee> getSpecifiedNameCompanyEmployees(@PathVariable String companyName){
-        return companyService.findByName(companyName).getEmployees();
+    public List<Employee> getSpecifiedNameCompanyEmployees(@PathVariable Integer companyId){
+        return companyService.getEmployeesByCompanyId(companyId);
     }
 
 

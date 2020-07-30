@@ -1,6 +1,7 @@
 package com.thoughtworks.springbootemployee.Service;
 
 import com.thoughtworks.springbootemployee.model.Company;
+import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.respository.CompanyRepository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,9 +35,6 @@ public class CompanyService {
         return company.get();
     }
 
-    public Company findByName(String companyName) {
-        return companyRepository.findByName(companyName).get();
-    }
     public Company findById(Integer companyId) {
         return companyRepository.findById(companyId).get();
     }
@@ -50,10 +48,6 @@ public class CompanyService {
         return companyRepository.findAll(PageRequest.of(page,pageSize));
     }
 
-    public void deleteCompanyByName(String companyName) {
-        Optional<Company> company=companyRepository.findByName(companyName);
-        company.ifPresent(companyRepository::delete);
-    }
 
     public Boolean deleteCompanyById(Integer companyId) {
         Optional<Company> company=companyRepository.findById(companyId);
@@ -65,6 +59,10 @@ public class CompanyService {
     }
 
     public Company addCompany(Company newCompany) {
-        return companyRepository.add(newCompany);
+        return companyRepository.save(newCompany);
+    }
+
+    public List<Employee> getEmployeesByCompanyId(Integer companyId){
+        return findById(companyId).getEmployees();
     }
 }

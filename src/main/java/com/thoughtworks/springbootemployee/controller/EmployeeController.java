@@ -31,10 +31,10 @@ public class EmployeeController {
         return employeeService.getEmployeeByGender(gender);
     }
 
-    @GetMapping("/{name}")
+    @GetMapping("/{employeeId}")
     @ResponseStatus(HttpStatus.OK)
-    public Employee getSpecifiedNameEmployee(@PathVariable String name){
-        return employeeService.findByName(name);
+    public Employee getSpecifiedIdEmployee(@PathVariable Integer employeeId){
+        return employeeService.findById(employeeId);
     }
 
     @PostMapping

@@ -37,9 +37,6 @@ public class EmployeeService {
         return employee.get();
     }
 
-    public Employee findByName(String employeeName) {
-         return employeeRepository.findByName(employeeName).get();
-    }
 
     public Employee findById(Integer employeeId) {
         return employeeRepository.findById(employeeId).get();
@@ -54,10 +51,6 @@ public class EmployeeService {
         return employeeRepository.findAll(PageRequest.of(page,pageSize));
     }
 
-    public void deleteEmployeeByName(String employeeName) {
-       Optional<Employee> employee=employeeRepository.findByName(employeeName);
-       employee.ifPresent(employeeRepository::delete);
-    }
 
     public Boolean deleteEmployeeById(Integer employeeId) {
         Optional<Employee> employee=employeeRepository.findById(employeeId);
@@ -69,7 +62,7 @@ public class EmployeeService {
     }
 
     public Employee addEmployee(Employee newEmployee) {
-        return employeeRepository.add(newEmployee);
+        return employeeRepository.save(newEmployee);
     }
 
     public List<Employee> getEmployeeByGender(String gender) {

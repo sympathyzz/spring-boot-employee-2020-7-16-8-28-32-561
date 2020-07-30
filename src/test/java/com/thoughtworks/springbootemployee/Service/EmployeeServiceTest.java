@@ -119,7 +119,7 @@ public class EmployeeServiceTest {
         //given
         Employee employee = new Employee(1, "Gavin", 17, "male", 6000);
         EmployeeRepository mockedEmployeeRepository = Mockito.mock(EmployeeRepository.class);
-        when(mockedEmployeeRepository.add(employee)).thenReturn(employee);
+        when(mockedEmployeeRepository.save(employee)).thenReturn(employee);
         EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
         //when
         Employee returnedEmployee = employeeService.addEmployee(employee);

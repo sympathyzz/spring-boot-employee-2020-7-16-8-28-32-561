@@ -142,7 +142,7 @@ public class CompanyServiceTest {
         Company newCompany=new Company(3,"baidu",2,baiduEmployees);
 
         CompanyRepository mockedCompanyRepository = Mockito.mock(CompanyRepository.class);
-        when(mockedCompanyRepository.add(newCompany)).thenReturn(
+        when(mockedCompanyRepository.save(newCompany)).thenReturn(
                 newCompany
         );
         CompanyService companyService = new CompanyService(mockedCompanyRepository);
