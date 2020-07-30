@@ -1,37 +1,41 @@
 package com.thoughtworks.springbootemployee.Service;
 
-import com.thoughtworks.springbootemployee.controller.CompanyController;
-import com.thoughtworks.springbootemployee.controller.EmployeeController;
 import com.thoughtworks.springbootemployee.model.Company;
-import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.respository.CompanyRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.Optional;
 
+
+@Service
 public class CompanyService {
     private CompanyRepository companyRepository;
     public CompanyService(CompanyRepository mockedCompanyRepository) {
         this.companyRepository=mockedCompanyRepository;
     }
 
-    public Company update(Company newCompany) {
-        CompanyController companyController = new CompanyController();
-        List<Company> companies = companyController.getAllData();
-        for (Company company : companies) {
-            if (newCompany.getId() == company.getId()) {
-                company.setCompanyName(newCompany.getCompanyName());
-                company.setEmployeesNumber(newCompany.getEmployeesNumber());
-                company.setEmployees(newCompany.getEmployees());
-                return company;
+    public Company update(Integer companyId,Company newCompany) {
+        Optional<Company> company = companyRepository.findById(companyId);
+        if(company!=null){
+            if (newCompany.getCompanyName()!=null){
+                company.get().setCompanyName(newCompany.getCompanyName());
             }
+            if (newCompany.getEmployeesNumber()!=null){
+                company.get().setEmployeesNumber(newCompany.getEmployeesNumber());
+            }
+            if (newCompany.getEmployees()!=null){
+                company.get().setEmployees(newCompany.getEmployees());
+            }
+            companyRepository.save(company.get());
         }
-        return null;
+        return company.get();
     }
 
     public Company findByName(String companyName) {
-        List<Company> companies = companyRepository.findAll();
-        return companies.stream().filter(company -> company.getCompanyName().equals(companyName)).findFirst().orElse(null);
+        return companyRepository.findByName(companyName).get();
     }
 
     public List<Company> getAll() {
@@ -39,27 +43,21 @@ public class CompanyService {
         return companies;
     }
 
-    public List<Company> getCompanyByPage(int page, int pageSize) {
-        List<Company> companies = companyRepository.findAll();
-        return companies.stream().skip((page - 1) * pageSize).limit(pageSize).collect(Collectors.toList());
+    public Page<Company> getCompanyByPage(Integer page, Integer pageSize) {
+        return companyRepository.findAll(PageRequest.of(page,pageSize));
     }
 
-    public String deleteCompanyByName(String companyName) {
-        List<Company> companies = companyRepository.findAll();
-        Company specifiedCompany=findByName(companyName);
-        if (specifiedCompany!=null) {
-            if(companies.remove(specifiedCompany )){
-                return "delete success!";
-            }
-        }
-        return "delete fail!";
+    public void deleteCompanyByName(String companyName) {
+        Optional<Company> company=companyRepository.findByName(companyName);
+        company.ifPresent(companyRepository::delete);
+    }
+
+    public void deleteCompanyById(Integer companyId) {
+        Optional<Company> company=companyRepository.findById(companyId);
+        company.ifPresent(companyRepository::delete);
     }
 
     public Company addCompany(Company newCompany) {
-        List<Company> companies = companyRepository.findAll();
-        if(companies.add(newCompany)){
-            return newCompany;
-        }
-        return null;
+        return companyRepository.add(newCompany);
     }
 }
