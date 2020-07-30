@@ -49,7 +49,7 @@ public class CompanyController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Company addCompany(Company company){
+    public Company addCompany(@RequestBody Company company){
         return companyService.addCompany(company);
     }
 
