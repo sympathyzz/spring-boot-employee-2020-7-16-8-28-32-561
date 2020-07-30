@@ -57,10 +57,10 @@ public class CompanyService {
 
     public Boolean deleteCompanyById(Integer companyId) {
         Optional<Company> company=companyRepository.findById(companyId);
-        company.ifPresent(companyRepository::delete);
-        if(companyRepository.findById(companyId)==null){
-            return false;
+        if(!company.isPresent()){
+            throw new NoSuchDataException();
         }
+        companyRepository.deleteById(companyId);
         return true;
     }
 
