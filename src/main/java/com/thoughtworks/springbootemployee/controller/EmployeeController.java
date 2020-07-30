@@ -13,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/employees")
 public class EmployeeController {
-    private static List<Employee> employees=new ArrayList<>();
 
     @Autowired
     EmployeeService employeeService;
