@@ -151,6 +151,22 @@ public class EmployeeServiceTest {
     }
 
     @Test
+    void should_throw_NoSuchDataException_when_delete_employee_given_wrong_employee_id() {
+        //given
+        EmployeeRepository mockedEmployeeRepository = Mockito.mock(EmployeeRepository.class);
+        Integer wrong_id = 9999;
+        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
+
+        when(mockedEmployeeRepository.findById(wrong_id)).thenReturn(Optional.ofNullable(null));
+
+        //when
+        Throwable throwable = assertThrows(NoSuchDataException.class, () -> employeeService.deleteEmployeeById(wrong_id));
+
+        //then
+        assertEquals(NoSuchDataException.class, throwable.getClass());
+    }
+
+    @Test
     void should_return_new_employee_when_add_given_new_employee() {
         //given
         Employee employee = new Employee(1, "Gavin", 17, "male", 6000);
