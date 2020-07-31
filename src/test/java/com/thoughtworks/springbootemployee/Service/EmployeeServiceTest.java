@@ -1,5 +1,6 @@
 package com.thoughtworks.springbootemployee.Service;
 
+import com.thoughtworks.springbootemployee.exception.IllegalOperationException;
 import com.thoughtworks.springbootemployee.exception.NoSuchDataException;
 import com.thoughtworks.springbootemployee.model.Employee;
 import com.thoughtworks.springbootemployee.respository.EmployeeRepository;
@@ -58,7 +59,22 @@ public class EmployeeServiceTest {
         assertEquals(NoSuchDataException.class, throwable.getClass());
     }
 
+    @Test
+    void should_throw_IllegalOperationException_when_update_given_wrong_employee_id() {
+        //given
+        EmployeeRepository mockedEmployeeRepository = Mockito.mock(EmployeeRepository.class);
+        Integer wrong_id = 9999;
+        Employee newEmployee = new Employee(2, "zach", 18, "male", 1000,1);
+        EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
 
+        when(mockedEmployeeRepository.findById(wrong_id)).thenReturn(Optional.ofNullable(null));
+
+        //when
+        Throwable throwable = assertThrows(IllegalOperationException.class, () -> employeeService.update(1, newEmployee));
+
+        //then
+        assertEquals(IllegalOperationException.class, throwable.getClass());
+    }
 
     @Test
     void should_return_specifiedEmployee_when_find_employee_given_id() {
