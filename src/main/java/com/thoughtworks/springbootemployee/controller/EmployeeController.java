@@ -49,7 +49,7 @@ public class EmployeeController {
 
     @PutMapping("/{employeeId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Employee updateEmployee(@PathVariable Integer employeeId,@RequestBody Employee employee){
+    public Employee updateEmployee(@PathVariable Integer employeeId,@RequestBody Employee employee) throws Exception {
         return employeeService.update(employeeId,employee);
     }
 

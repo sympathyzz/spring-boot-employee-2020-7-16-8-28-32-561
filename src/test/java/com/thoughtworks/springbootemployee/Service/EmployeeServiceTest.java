@@ -10,7 +10,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -21,7 +20,7 @@ import static org.mockito.Mockito.when;
 
 public class EmployeeServiceTest {
     @Test
-    void should_return_employee_when_update_given_employee_id() {
+    void should_return_employee_when_update_given_employee_id() throws Exception{
         //given
         EmployeeRepository mockedEmployeeRepository = Mockito.mock(EmployeeRepository.class);
         when(mockedEmployeeRepository.findById(1)).thenReturn(
@@ -63,11 +62,10 @@ public class EmployeeServiceTest {
     void should_throw_IllegalOperationException_when_update_given_wrong_employee_id() {
         //given
         EmployeeRepository mockedEmployeeRepository = Mockito.mock(EmployeeRepository.class);
-        Integer wrong_id = 9999;
-        Employee newEmployee = new Employee(2, "zach", 18, "male", 1000,1);
+        Employee newEmployee = new Employee(2, "zach2", 18, "male", 1000,1);
         EmployeeService employeeService = new EmployeeService(mockedEmployeeRepository);
 
-        when(mockedEmployeeRepository.findById(wrong_id)).thenReturn(Optional.ofNullable(null));
+        when(mockedEmployeeRepository.findById(1)).thenReturn(Optional.of(new Employee(1, "Gavin", 17, "male", 6000,1)));
 
         //when
         Throwable throwable = assertThrows(IllegalOperationException.class, () -> employeeService.update(1, newEmployee));
