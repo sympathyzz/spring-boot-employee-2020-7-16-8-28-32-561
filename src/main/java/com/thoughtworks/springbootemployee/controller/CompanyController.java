@@ -1,14 +1,19 @@
 package com.thoughtworks.springbootemployee.controller;
 
 import com.thoughtworks.springbootemployee.Service.CompanyService;
+import com.thoughtworks.springbootemployee.dto.CompanyDto;
+import com.thoughtworks.springbootemployee.dto.EmployeeDto;
 import com.thoughtworks.springbootemployee.model.Company;
 import com.thoughtworks.springbootemployee.model.Employee;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -17,40 +22,53 @@ public class CompanyController {
     @Autowired
     CompanyService companyService;
 
+    @Autowired
+    ModelMapper modelMapper;
+
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<Company> getCompanies(){
-        return companyService.getAll();
+    public List<CompanyDto> getCompanies(){
+        return companyService.getAll().stream().map(this::companyConvertToDto).collect(Collectors.toList());
+    }
+
+    private CompanyDto companyConvertToDto(Company company) {
+        CompanyDto companyDto=modelMapper.map(company,CompanyDto.class);
+        return companyDto;
+    }
+
+    private EmployeeDto employeeConvertToDto(Employee employee) {
+        EmployeeDto employeeDto=modelMapper.map(employee,EmployeeDto.class);
+        return employeeDto;
     }
 
     @GetMapping("/{companyId}")
     @ResponseStatus(HttpStatus.OK)
-    public Company getSpecifiedIdCompany(@PathVariable Integer companyId){
-        return companyService.findById(companyId);
+    public CompanyDto getSpecifiedIdCompany(@PathVariable Integer companyId){
+        return companyConvertToDto(companyService.findById(companyId));
     }
     @GetMapping("/{companyId}/employees")
     @ResponseStatus(HttpStatus.OK)
-    public List<Employee> getSpecifiedNameCompanyEmployees(@PathVariable Integer companyId){
-        return companyService.getEmployeesByCompanyId(companyId);
+    public List<EmployeeDto> getSpecifiedNameCompanyEmployees(@PathVariable Integer companyId){
+        return companyService.getEmployeesByCompanyId(companyId).stream().map(this::employeeConvertToDto).collect(Collectors.toList());
     }
 
 
     @GetMapping(params = {"page","pageNum"})
     @ResponseStatus(HttpStatus.OK)
-    public Page<Company> getCompanies(@RequestParam Integer page, @RequestParam Integer pageSize){
-        return companyService.getCompanyByPage(page,pageSize);
+    public Page<CompanyDto> getCompanies(@RequestParam Integer page, @RequestParam Integer pageSize){
+        return new PageImpl<>(companyService.getCompanyByPage(page,pageSize).stream().map(this::companyConvertToDto).collect(Collectors.toList()));
     }
 
     @PutMapping("/{companyId}")
     @ResponseStatus(HttpStatus.CREATED)
-    public Company updateCompany(@PathVariable Integer companyId,@RequestBody Company newCompany){
-       return companyService.update(companyId,newCompany);
+    public CompanyDto updateCompany(@PathVariable Integer companyId,@RequestBody Company newCompany){
+       return companyConvertToDto(companyService.update(companyId,newCompany));
     }
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public Company addCompany(@RequestBody Company company){
-        return companyService.addCompany(company);
+    public CompanyDto addCompany(@RequestBody Company company){
+        return companyConvertToDto(companyService.addCompany(company));
     }
 
     @DeleteMapping("/{companyId}")
