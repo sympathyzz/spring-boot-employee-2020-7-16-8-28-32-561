@@ -15,8 +15,8 @@ import java.util.Optional;
 @Service
 public class CompanyService {
     private CompanyRepository companyRepository;
-    public CompanyService(CompanyRepository mockedCompanyRepository) {
-        this.companyRepository=mockedCompanyRepository;
+    public CompanyService(CompanyRepository companyRepository) {
+        this.companyRepository=companyRepository;
     }
 
     public Company update(Integer companyId,Company newCompany) {
